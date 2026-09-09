@@ -1,0 +1,96 @@
+// Central destination data with public hosted Unsplash image URLs.
+
+export const destinations = [
+  {
+    id: 'santorini',
+    name: 'Santorini',
+    country: 'Greece',
+    region: 'EUROPE',
+    description: 'Whitewashed villages hung over a volcanic caldera, and evenings that end in Aegean gold.',
+    duration: '4–5 days',
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    id: 'kyoto',
+    name: 'Kyoto',
+    country: 'Japan',
+    region: 'ASIA',
+    description: 'A thousand years of ritual, bamboo, and quiet gardens folded into a modern city.',
+    duration: '5–6 days',
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    id: 'swiss-alps',
+    name: 'Swiss Alps',
+    country: 'Switzerland',
+    region: 'EUROPE',
+    description: 'Glacial lakes, cable cars into the clouds, and trails that end at the edge of the sky.',
+    duration: '6–8 days',
+    rating: 4.8,
+    image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    id: 'bali',
+    name: 'Bali',
+    country: 'Indonesia',
+    region: 'ASIA',
+    description: 'Rice terraces, temple ceremonies, and coastline that shifts from surf to sanctuary.',
+    duration: '7–10 days',
+    rating: 4.8,
+    image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    id: 'amalfi-coast',
+    name: 'Amalfi Coast',
+    country: 'Italy',
+    region: 'EUROPE',
+    description: 'Lemon groves clinging to cliffs above a coast road built for slow, open-window driving.',
+    duration: '5–7 days',
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
+    id: 'dubai',
+    name: 'Dubai',
+    country: 'United Arab Emirates',
+    region: 'MIDDLE EAST',
+    description: 'A skyline built from ambition, with dunes and old souks just beyond the glass.',
+    duration: '4–6 days',
+    rating: 4.7,
+    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=80',
+  },
+];
+
+// Slides used specifically for the Hero — a curated, cinematic subset.
+export const heroSlides = [
+  {
+    id: 1,
+    title: 'Santorini, Greece',
+    subtitle: 'Iconic white buildings & blue Aegean views.',
+    heading: 'Travel farther.\nLive unforgettable stories.',
+    image: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1920&q=80',
+  },
+  {
+    id: 2,
+    title: 'Amalfi Coast, Italy',
+    subtitle: 'Dramatic cliffside villages and crystal waters.',
+    heading: 'Discover hidden gems\nalong the coastline.',
+    image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1920&q=80',
+  },
+  {
+    id: 3,
+    title: 'Swiss Alps, Switzerland',
+    subtitle: 'Majestic peaks and serene mountain trails.',
+    heading: 'Reach new heights\nin breathtaking nature.',
+    image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=1920&q=80',
+  },
+  {
+    id: 4,
+    title: 'Kyoto, Japan',
+    subtitle: 'Serene bamboo groves and historic shrines.',
+    heading: 'Immerse yourself\nin timeless traditions.',
+    image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1920&q=80',
+  },
+];

@@ -1,0 +1,109 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&display=swap');
+@import "tailwindcss";
+
+/*
+  DESIGN TOKENS — Wanderly, editorial-travel identity
+  --------------------------------------------------
+  Color:
+    --ink      #14140F  deep bark/near-black, all body text on light
+    --ivory    #F6F2E9  warm paper background
+    --pine     #17332A  deep green, primary dark surfaces & nav
+    --clay     #B9855A  terracotta-clay accent, used sparingly (CTAs, active states)
+    --sage     #9AA88C  muted green, secondary accents / dividers
+    --sand     #E7DFCC  card surface, one step off ivory
+  Type:
+    --font-display: Fraunces — editorial serif, used ONLY for large headlines/pull quotes
+    --font-sans: Outfit — nav, labels, buttons
+    --font-body: Inter — paragraph copy
+*/
+
+@theme {
+  --font-display: 'Fraunces', serif;
+  --font-sans: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --color-ink: #14140f;
+  --color-ivory: #f6f2e9;
+  --color-pine: #17332a;
+  --color-pine-light: #234a3c;
+  --color-clay: #b9855a;
+  --color-clay-light: #d3a578;
+  --color-sage: #9aa88c;
+  --color-sand: #e7dfcc;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-ivory);
+  color: var(--color-ink);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-sans);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+
+::selection {
+  background-color: var(--color-clay);
+  color: var(--color-ivory);
+}
+
+/* Hairline rule used as a structural divider, not decoration */
+.hr-line {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.15;
+}
+
+/* Marquee */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 32s linear infinite;
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Custom cursor (desktop only, toggled via JS) */
+.wanderly-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--color-ivory);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  transition: width 0.25s ease, height 0.25s ease, opacity 0.2s ease;
+  will-change: transform;
+}
+
+/* Respect reduced motion globally: freeze marquee + long transitions */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee-track { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
