@@ -1,40 +1,59 @@
-import React from 'react';
-
-const articles = [
-  { tag: 'ASIA', title: '48 Hours in Kyoto', categories: 'Culture • Food • History', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80' },
-  { tag: 'EUROPE', title: 'The Ultimate Amalfi Coast Road Trip', categories: 'Road Trips • Beaches • Food', image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80' },
-  { tag: 'ASIA', title: 'Hidden Gems of Southeast Asia', categories: 'Nature • Culture • Adventure', image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=600&q=80' },
-  { tag: 'EUROPE', title: "A Beginner's Guide to the Swiss Alps", categories: 'Hiking • Adventure • Nature', image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=600&q=80' },
-];
+import { ArrowUpRight } from 'lucide-react';
+import ScrollReveal from './motion/ScrollReveal';
+import { articles } from '../data/destinations';
 
 export default function TravelInspiration() {
   return (
-    <section className="py-16 px-6 max-w-7xl mx-auto">
-      <div className="flex justify-between items-end mb-10">
+    <section id="inspiration" className="py-24 sm:py-32 px-6 sm:px-10 max-w-7xl mx-auto bg-gradient-to-b from-ivory to-sand/30">
+      <ScrollReveal direction="left" className="flex justify-between items-end mb-12 gap-6">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Travel Inspiration</span>
-          <h2 className="text-3xl  font-bold text-gray-900 mt-1">Get inspired</h2>
+          <span className="text-xs font-medium uppercase tracking-widest text-clay mb-2 inline-block">Travel journal</span>
+          <h2 className="font-display text-4xl sm:text-5xl text-ink">Get inspired</h2>
         </div>
-        <a href="#articles" className="text-sm font-semibold text-emerald-900 hover:underline">View all articles →</a>
-      </div>
+        <a href="#stories" className="text-sm font-medium text-ink/60 hover:text-ink transition hidden sm:inline-flex items-center gap-1 group">
+          View all articles
+          <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+        </a>
+      </ScrollReveal>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {articles.map((art, idx) => (
-          <div key={idx} className="group bg-neutral-50 rounded-2xl overflow-hidden border border-gray-100 flex flex-col justify-between">
+          <ScrollReveal
+            key={art.title}
+            direction="up"
+            delay={idx * 0.1}
+            amount={0.2}
+            className="group bg-ivory/70 rounded-2xl overflow-hidden border border-ink/5 flex flex-col justify-between hover:shadow-[0_12px_40px_-12px_rgba(20,20,15,0.15)] transition-shadow duration-500"
+          >
             <div>
-              <div className="relative h-48 overflow-hidden">
-                <img src={art.image} alt={art.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-                <span className="absolute top-3 left-3 bg-black/60 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">{art.tag}</span>
+              <div className="relative h-52 overflow-hidden">
+                <img
+                  src={art.image}
+                  alt={art.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                  loading="lazy"
+                />
+                <span className="absolute top-3 left-3 bg-pine/80 backdrop-blur-sm text-ivory text-[10px] font-medium px-2.5 py-1 rounded-full uppercase tracking-wider">
+                  {art.tag}
+                </span>
               </div>
-              <div className="p-4">
-                <h3 className="font-bold text-base text-gray-900 group-hover:text-emerald-800 transition">{art.title}</h3>
-                <p className="text-xs text-gray-400 mt-1">{art.categories}</p>
+              <div className="p-5">
+                <h3 className="font-display text-lg text-ink group-hover:text-clay transition-colors duration-300 leading-snug">
+                  {art.title}
+                </h3>
+                <p className="text-xs text-ink/45 mt-1.5">{art.categories}</p>
               </div>
             </div>
-            <div className="p-4 pt-0">
-              <a href="#read" className="text-xs font-bold text-emerald-900 hover:underline inline-flex items-center gap-1">Read more →</a>
+            <div className="px-5 pb-5">
+              <a
+                href="#featured-trip"
+                className="text-xs font-semibold text-pine hover:text-pine-light transition inline-flex items-center gap-1.5 group/link"
+              >
+                Read more
+                <ArrowUpRight className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+              </a>
             </div>
-          </div>
+          </ScrollReveal>
         ))}
       </div>
     </section>

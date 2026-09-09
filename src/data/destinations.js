@@ -1,5 +1,3 @@
-// Central destination data with public hosted Unsplash image URLs.
-
 export const destinations = [
   {
     id: 'santorini',
@@ -63,7 +61,6 @@ export const destinations = [
   },
 ];
 
-// Slides used specifically for the Hero — a curated, cinematic subset.
 export const heroSlides = [
   {
     id: 1,
@@ -93,4 +90,100 @@ export const heroSlides = [
     heading: 'Immerse yourself\nin timeless traditions.',
     image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1920&q=80',
   },
+];
+
+export const indiaDestinations = [
+  {
+    id: 'taj-mahal',
+    name: 'Taj Mahal',
+    location: 'Agra, India',
+    tagline: 'An eternal monument to love',
+    image: '/images/01-taj-mahal.jpg',
+  },
+  {
+    id: 'gateway-of-india',
+    name: 'Gateway of India',
+    location: 'Mumbai, India',
+    tagline: 'Where colonial history meets the Arabian Sea',
+    image: '/images/02-gateway-of-india.jpg',
+  },
+  {
+    id: 'hawa-mahal',
+    name: 'Hawa Mahal',
+    location: 'Jaipur, India',
+    tagline: 'The Palace of Winds and royal pink city',
+    image: '/images/03-hawa-mahal.jpg',
+  },
+  {
+    id: 'kerala-backwaters',
+    name: 'Kerala Backwaters',
+    location: 'Kerala, India',
+    tagline: 'Serene waterways through emerald landscapes',
+    image: '/images/04-kerala-backwaters.jpg',
+  },
+  {
+    id: 'palm-beach',
+    name: 'Palm Beach',
+    location: 'Mumbai, India',
+    tagline: 'Where the city meets the open coast',
+    image: '/images/05-palm-beach-india.jpg',
+  },
+  {
+    id: 'varanasi-ghats',
+    name: 'Varanasi Ghats',
+    location: 'Varanasi, India',
+    tagline: 'Ancient rituals along the sacred Ganges',
+    image: '/images/06-varanasi-ghats.jpg',
+  },
+  {
+    id: 'varanasi-boats',
+    name: 'Ganges at Dawn',
+    location: 'Varanasi, India',
+    tagline: 'Morning boat rides through centuries of tradition',
+    image: '/images/07-varanasi-ghats-boats.jpg',
+  },
+  {
+    id: 'dal-lake',
+    name: 'Dal Lake',
+    location: 'Srinagar, India',
+    tagline: 'Floating gardens and Himalayan reflections',
+    image: '/images/08-dal-lake.jpg',
+  },
+  {
+    id: 'pangong-lake',
+    name: 'Pangong Lake',
+    location: 'Ladakh, India',
+    tagline: 'Endless blue at 4,350 metres',
+    image: '/images/09-pangong-lake.jpg',
+  },
+  {
+    id: 'shikara-ride',
+    name: 'Shikara Ride',
+    location: 'Dal Lake, India',
+    tagline: 'A gentle glide through Kashmir\'s crown jewel',
+    image: '/images/10-dal-lake-shikara.jpg',
+  },
+  {
+    id: 'golden-temple',
+    name: 'Golden Temple',
+    location: 'Amritsar, India',
+    tagline: 'Spiritual radiance in the heart of Punjab',
+    image: '/images/11-golden-temple-night.jpg',
+  },
+];
+
+export const experiences = [
+  { title: 'Northern Lights Adventure', location: 'Tromsø, Norway', rating: '4.9', reviews: '1.2k', price: '$1,299', image: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=600&q=80' },
+  { title: 'Mediterranean Sailing', location: 'Santorini, Greece', rating: '4.8', reviews: '980', price: '$1,099', image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80' },
+  { title: 'Japanese Tea Ceremony', location: 'Kyoto, Japan', rating: '4.9', reviews: '760', price: '$199', image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80' },
+  { title: 'Desert Safari', location: 'Dubai, UAE', rating: '4.7', reviews: '2.1k', price: '$149', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80' },
+  { title: 'Alpine Hiking', location: 'Zermatt, Switzerland', rating: '4.8', reviews: '850', price: '$249', image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80' },
+  { title: 'Tropical Island Escape', location: 'Maldives', rating: '4.9', reviews: '1.4k', price: '$1,599', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=600&q=80' },
+];
+
+export const articles = [
+  { tag: 'ASIA', title: '48 Hours in Kyoto', categories: 'Culture · Food · History', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80' },
+  { tag: 'EUROPE', title: 'The Ultimate Amalfi Coast Road Trip', categories: 'Road Trips · Beaches · Food', image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80' },
+  { tag: 'ASIA', title: 'Hidden Gems of Southeast Asia', categories: 'Nature · Culture · Adventure', image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=600&q=80' },
+  { tag: 'EUROPE', title: "A Beginner's Guide to the Swiss Alps", categories: 'Hiking · Adventure · Nature', image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=600&q=80' },
 ];

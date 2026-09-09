@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import AnimatedText from './motion/AnimatedText';
@@ -40,7 +40,7 @@ export default function HeroSection() {
   const slide = heroSlides[index];
 
   return (
-    <section id="top" ref={heroRef} className="relative h-[105vh] bg-ink text-ivory overflow-hidden">
+    <section id="top" ref={heroRef} className="relative h-[105vh] sm:h-[110vh] bg-ink text-ivory overflow-hidden">
       {/* Background — mask-reveals on load, then crossfades between slides */}
       <motion.div
         className="absolute inset-0"
@@ -68,14 +68,14 @@ export default function HeroSection() {
       {/* Content */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 h-full max-w-7xl mx-auto px-6 sm:px-10 flex flex-col justify-between pt-32 pb-14"
+        className="relative z-10 h-full max-w-7xl mx-auto px-6 sm:px-10 flex flex-col justify-between pt-32 sm:pt-40 pb-14"
       >
-        <div className="max-w-2xl">
+        <div className="max-w-3xl">
           <motion.span
             initial={{ opacity: 0, y: 12 }}
             animate={loaded ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 1.3, duration: 0.6 }}
-            className="inline-block text-[13px] font-medium text-ivory/70 mb-5"
+            className="inline-block text-[13px] font-medium text-ivory/70 mb-5 tracking-wide uppercase"
           >
             {slide.title}
           </motion.span>
@@ -84,14 +84,14 @@ export default function HeroSection() {
             as="h1"
             text={slide.heading}
             delay={1.45}
-            className="font-display text-[13vw] sm:text-6xl lg:text-[5.2rem] leading-[0.98] font-normal"
+            className="font-display text-[11vw] sm:text-6xl lg:text-[5.2rem] leading-[0.98] font-normal"
           />
 
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={loaded ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 2.1, duration: 0.7 }}
-            className="mt-6 text-base text-ivory/75 max-w-md font-light"
+            className="mt-6 text-base sm:text-lg text-ivory/75 max-w-md font-light leading-relaxed"
           >
             {slide.subtitle}
           </motion.p>

@@ -1,9 +1,3 @@
-import React from 'react';
-
-/**
- * Infinite horizontal marquee. Content is duplicated once so the CSS
- * animation can loop seamlessly at -50%. Keep to one or two per page.
- */
 export default function Marquee({ items = [], className = '', textClassName = '' }) {
   const content = [...items, ...items];
   return (

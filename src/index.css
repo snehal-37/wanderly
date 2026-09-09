@@ -1,5 +1,4 @@
-/* src/index.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&display=swap');
 @import "tailwindcss";
 
 /*
@@ -14,7 +13,7 @@
     --sand     #E7DFCC  card surface, one step off ivory
   Type:
     --font-display: Fraunces — editorial serif, used ONLY for large headlines/pull quotes
-    --font-sans: Outfit — nav, labels, buttons
+    --font-sans: Outfit — nav, labels, buttons, headings
     --font-body: Inter — paragraph copy
 */
 
@@ -41,6 +40,8 @@ body {
   font-family: var(--font-body);
   background-color: var(--color-ivory);
   color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4 {
@@ -57,7 +58,27 @@ h1, h2, h3, h4 {
   color: var(--color-ivory);
 }
 
-/* Hairline rule used as a structural divider, not decoration */
+/* Skip to content link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-pine);
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0 0 0.5rem 0.5rem;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* Hairline rule used as a structural divider */
 .hr-line {
   height: 1px;
   background: currentColor;
@@ -75,28 +96,43 @@ h1, h2, h3, h4 {
   to { transform: translateX(-50%); }
 }
 
-/* Custom cursor (desktop only, toggled via JS) */
-.wanderly-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 200;
-  pointer-events: none;
-  mix-blend-mode: difference;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  background: var(--color-ivory);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  transition: width 0.25s ease, height 0.25s ease, opacity 0.2s ease;
-  will-change: transform;
+/* Hide scrollbars for horizontal snap-scroll galleries */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
-/* Respect reduced motion globally: freeze marquee + long transitions */
+/* Focus visible ring for all interactive elements */
+*:focus-visible {
+  outline: 2px solid var(--color-clay);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Smooth image loading */
+img {
+  transition: opacity 0.3s ease;
+}
+
+/* Scrollbar styling for webkit */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-sand);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-sage);
+}
+
+/* Respect reduced motion globally */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .marquee-track { animation: none; }
