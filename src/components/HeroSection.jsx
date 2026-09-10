@@ -221,22 +221,6 @@ export default function HeroSection({ ready = true }) {
         </div>
       </div>
 
-      {/* Scroll cue */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={ready ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ delay: 1.4, duration: 0.8 }}
-        className="absolute bottom-7 right-6 sm:right-10 z-10 hidden sm:flex items-center gap-4 text-ivory/55"
-      >
-        <span className="text-[11px] font-medium tracking-[0.3em] uppercase">Scroll</span>
-        <div className="w-px h-12 bg-ivory/25 relative overflow-hidden">
-          <motion.span
-            className="absolute top-0 left-0 w-px h-4 bg-ivory"
-            animate={reduceMotion ? {} : { y: [0, 48, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </div>
-      </motion.div>
 
       {/* Chapter bridge label */}
       <motion.div
