@@ -1,126 +1,252 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
-import AnimatedText from './motion/AnimatedText';
 import SearchBar from './SearchBar';
 import { heroSlides } from '../data/destinations';
 import { usePrefersReducedMotion } from '../hooks/UseMediaQuery';
 
-export default function HeroSection() {
+const EASE_CINEMA = [0.65, 0, 0.35, 1];
+const EASE_OUT = [0.22, 1, 0.36, 1];
+const SLIDE_MS = 8000;
+
+const scene = {
+  hidden: { clipPath: 'inset(0 0 0 100%)', scale: 1.1, x: '4%' },
+  enter: (d) => ({
+    clipPath: d > 0 ? 'inset(0 0 0 100%)' : 'inset(0 100% 0 0)',
+    scale: 1.1,
+    x: d > 0 ? '4%' : '-4%',
+  }),
+  center: { clipPath: 'inset(0 0 0 0%)', scale: 1, x: '0%' },
+  exit: (d) => ({ x: d > 0 ? '-3%' : '3%', scale: 1.06 }),
+};
+
+const pad = (n) => String(n + 1).padStart(2, '0');
+
+export default function HeroSection({ ready = true }) {
   const [index, setIndex] = useState(0);
-  const [loaded, setLoaded] = useState(false);
-  const heroRef = useRef(null);
+  const [dir, setDir] = useState(1);
   const reduceMotion = usePrefersReducedMotion();
+  const heroRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
 
-  // Hero "zooms out" and content lifts at a different rate — classic
-  // cinematic parallax, kept subtle so it never feels like a gimmick.
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1.12, 1]);
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '12%']);
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-28%']);
+  // Chapter bridge — as the hero is scrolled away the scene gently zooms,
+  // the copy rises, darkness gathers, and an oversized editorial label
+  // surfaces at the fold like the title of the next chapter.
+  const bgZoom = useTransform(scrollYProgress, [0, 1], [1, 1.07]);
+  const bridgeDark = useTransform(scrollYProgress, [0, 0.75], [0, 0.55]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-42%']);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const chapterLabelOpacity = useTransform(scrollYProgress, [0.5, 0.82], [0, 1]);
+  const chapterLabelY = useTransform(scrollYProgress, [0.5, 0.82], ['40%', '0%']);
 
   useEffect(() => {
-    // Initial mask reveal fires shortly after mount.
-    const t = setTimeout(() => setLoaded(true), 150);
-    return () => clearTimeout(t);
-  }, []);
-
-  useEffect(() => {
+    if (reduceMotion) return;
     const timer = setInterval(() => {
+      setDir(1);
       setIndex((prev) => (prev + 1) % heroSlides.length);
-    }, 8000);
+    }, SLIDE_MS);
     return () => clearInterval(timer);
-  }, []);
+  }, [reduceMotion]);
 
   const slide = heroSlides[index];
 
   return (
-    <section id="top" ref={heroRef} className="relative h-[105vh] sm:h-[110vh] bg-ink text-ivory overflow-hidden">
-      {/* Background — mask-reveals on load, then crossfades between slides */}
-      <motion.div
-        className="absolute inset-0"
-        initial={{ clipPath: reduceMotion ? 'inset(0 0 0 0)' : 'inset(0 0 0 100%)' }}
-        animate={{ clipPath: loaded ? 'inset(0 0 0 0%)' : undefined }}
-        transition={{ duration: 1.4, ease: [0.76, 0, 0.24, 1] }}
-      >
-        <motion.div style={{ scale: bgScale, y: bgY }} className="absolute inset-0">
-          <AnimatePresence mode="sync">
-            <motion.div
-              key={slide.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.6, ease: 'easeInOut' }}
-              className="absolute inset-0 bg-cover bg-center"
+    <section
+      id="top"
+      ref={heroRef}
+      data-cursor="explore"
+      className="relative h-[100svh] min-h-[560px] bg-ink text-ivory overflow-hidden"
+      aria-label="Featured destinations"
+    >
+      {/* Cinematic scene stack */}
+      <motion.div style={{ scale: bgZoom }} className="absolute inset-0">
+        <AnimatePresence initial={reduceMotion ? false : true}>
+          <motion.div
+            key={slide.id}
+            custom={dir}
+            variants={scene}
+            initial={reduceMotion ? 'center' : 'hidden'}
+            animate={reduceMotion || ready ? 'center' : 'hidden'}
+            exit={reduceMotion ? undefined : 'exit'}
+            transition={{ duration: 1.2, ease: EASE_CINEMA }}
+            className="absolute inset-0"
+          >
+            <motion.img
+              src={slide.image}
+              alt={slide.title}
+              className="absolute inset-0 w-full h-full object-cover will-change-transform"
+              initial={false}
+              animate={reduceMotion ? { x: 0, scale: 1 } : { x: [0, '-1%', 0], scale: [1, 1.08, 1] }}
+              transition={
+                reduceMotion
+                  ? { duration: 0 }
+                  : { duration: 26, repeat: Infinity, ease: 'linear', repeatType: 'mirror' }
+              }
+              draggable={false}
+            />
+            <div
+              className="absolute inset-0"
               style={{
-                backgroundImage: `linear-gradient(180deg, rgba(20,20,15,0.55) 0%, rgba(20,20,15,0.15) 45%, rgba(20,20,15,0.65) 100%), url('${slide.image}')`,
+                backgroundImage:
+                  'linear-gradient(180deg, rgba(20,20,15,0.52) 0%, rgba(20,20,15,0.18) 42%, rgba(9,9,6,0.72) 100%)',
               }}
             />
-          </AnimatePresence>
-        </motion.div>
+          </motion.div>
+        </AnimatePresence>
       </motion.div>
 
-      {/* Content */}
+      <div className="absolute inset-0 vignette pointer-events-none" aria-hidden="true" />
+
+      {/* Copy — choreographed per scene */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 h-full max-w-7xl mx-auto px-6 sm:px-10 flex flex-col justify-between pt-32 sm:pt-40 pb-14"
+        className="relative z-10 h-full max-w-7xl mx-auto px-6 sm:px-10 flex flex-col justify-center pb-28 sm:pb-32"
       >
-        <div className="max-w-3xl">
-          <motion.span
-            initial={{ opacity: 0, y: 12 }}
-            animate={loaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 1.3, duration: 0.6 }}
-            className="inline-block text-[13px] font-medium text-ivory/70 mb-5 tracking-wide uppercase"
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={index}
+            className="max-w-3xl"
+            exit={{ opacity: 0, transition: { duration: 0.01 } }}
           >
-            {slide.title}
-          </motion.span>
+            <motion.p
+              initial={reduceMotion ? false : { opacity: 0, y: 18, filter: 'blur(6px)' }}
+              animate={
+                reduceMotion
+                  ? {}
+                  : {
+                      opacity: 1,
+                      y: 0,
+                      filter: 'blur(0px)',
+                      transition: { delay: 0.25, duration: 0.7, ease: EASE_OUT },
+                    }
+              }
+              className="text-[13px] font-medium text-ivory/75 tracking-[0.22em] uppercase mb-6 flex items-center gap-3"
+            >
+              <span className="w-8 h-px bg-clay-light inline-block" />
+              {slide.title}
+            </motion.p>
 
-          <AnimatedText
-            as="h1"
-            text={slide.heading}
-            delay={1.45}
-            className="font-display text-[11vw] sm:text-6xl lg:text-[5.2rem] leading-[0.98] font-normal"
-          />
+            <h1 className="font-display font-normal text-[13vw] sm:text-6xl lg:text-[5.4rem] leading-[1.02] tracking-[-0.01em]">
+              {slide.heading.split('\n').map((line, i) => (
+                <span key={i} className="block overflow-hidden pb-[0.08em] -mb-[0.08em]">
+                  <motion.span
+                    className="block"
+                    initial={reduceMotion ? false : { y: '108%', filter: 'blur(8px)' }}
+                    animate={
+                      reduceMotion
+                        ? {}
+                        : {
+                            y: '0%',
+                            filter: 'blur(0px)',
+                            transition: { delay: i === 0 ? 0.4 : 0.5, duration: 0.9, ease: EASE_OUT },
+                          }
+                    }
+                  >
+                    {line}
+                  </motion.span>
+                </span>
+              ))}
+            </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={loaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 2.1, duration: 0.7 }}
-            className="mt-6 text-base sm:text-lg text-ivory/75 max-w-md font-light leading-relaxed"
-          >
-            {slide.subtitle}
-          </motion.p>
-        </div>
+            <motion.p
+              initial={reduceMotion ? false : { opacity: 0, y: 16, filter: 'blur(4px)' }}
+              animate={
+                reduceMotion
+                  ? {}
+                  : {
+                      opacity: 1,
+                      y: 0,
+                      filter: 'blur(0px)',
+                      transition: { delay: 0.7, duration: 0.7, ease: EASE_OUT },
+                    }
+              }
+              className="mt-6 text-base sm:text-lg text-ivory/80 max-w-md font-light leading-relaxed"
+            >
+              {slide.subtitle}
+            </motion.p>
+          </motion.div>
+        </AnimatePresence>
 
+        {/* Search stays put — it belongs to the hero, not to any single scene */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={loaded ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 2.4, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10"
+          initial={reduceMotion ? false : { opacity: 0, y: 26, filter: 'blur(4px)' }}
+          animate={
+            reduceMotion || ready
+              ? { opacity: 1, y: 0, filter: 'blur(0px)' }
+              : { opacity: 0, y: 26, filter: 'blur(4px)' }
+          }
+          transition={
+            reduceMotion ? { duration: 0 } : { delay: 0.9, duration: 0.8, ease: EASE_OUT }
+          }
+          className="mt-10 max-w-2xl"
         >
           <SearchBar />
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
+      {/* Editorial progress system */}
+      <div className="absolute bottom-7 left-6 sm:left-10 z-10 flex items-center gap-5">
+        <div className="flex items-baseline gap-1.5 overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={index}
+              initial={{ y: 18, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -18, opacity: 0 }}
+              transition={{ duration: 0.45, ease: EASE_OUT }}
+              className="font-display text-2xl leading-none"
+            >
+              {pad(index)}
+            </motion.span>
+          </AnimatePresence>
+          <span className="font-display text-2xl leading-none text-ivory/30">
+            / {pad(heroSlides.length - 1)}
+          </span>
+        </div>
+        <div className="w-32 sm:w-44 h-px bg-ivory/20 relative overflow-hidden">
+          <motion.div
+            key={index}
+            className="absolute inset-y-0 left-0 w-full origin-left bg-ivory/80"
+            initial={reduceMotion ? { scaleX: 1 } : { scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={
+              reduceMotion
+                ? { duration: 0 }
+                : { duration: SLIDE_MS / 1000, ease: 'linear' }
+            }
+          />
+        </div>
+      </div>
+
+      {/* Scroll cue */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={loaded ? { opacity: 1 } : {}}
-        transition={{ delay: 2.8, duration: 0.8 }}
-        className="absolute bottom-6 right-6 sm:right-10 z-10 flex items-center gap-2 text-ivory/60"
+        animate={ready ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ delay: 1.4, duration: 0.8 }}
+        className="absolute bottom-7 right-6 sm:right-10 z-10 hidden sm:flex items-center gap-4 text-ivory/55"
       >
-        <span className="text-[11px] font-medium tracking-wide hidden sm:inline">Scroll</span>
-        <motion.span
-          animate={reduceMotion ? {} : { y: [0, 6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ArrowDown className="w-4 h-4" />
-        </motion.span>
+        <span className="text-[11px] font-medium tracking-[0.3em] uppercase">Scroll</span>
+        <div className="w-px h-12 bg-ivory/25 relative overflow-hidden">
+          <motion.span
+            className="absolute top-0 left-0 w-px h-4 bg-ivory"
+            animate={reduceMotion ? {} : { y: [0, 48, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </div>
+      </motion.div>
+
+      {/* Chapter bridge label */}
+      <motion.div
+        style={{ opacity: chapterLabelOpacity, y: chapterLabelY }}
+        className="absolute inset-x-0 -bottom-2 z-10 text-center pointer-events-none"
+        aria-hidden="true"
+      >
+        <span className="font-display italic text-ivory/90 text-[clamp(2.6rem,7vw,6rem)] leading-none tracking-tight">
+          Wander further
+        </span>
       </motion.div>
     </section>
   );

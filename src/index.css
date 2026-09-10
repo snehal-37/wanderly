@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&display=swap');
 @import "tailwindcss";
 
 /*
   DESIGN TOKENS — Wanderly, editorial-travel identity
-  --------------------------------------------------
+  ----------------------------------------------------
   Color:
     --ink      #14140F  deep bark/near-black, all body text on light
     --ivory    #F6F2E9  warm paper background
@@ -30,10 +30,22 @@
   --color-clay-light: #d3a578;
   --color-sage: #9aa88c;
   --color-sand: #e7dfcc;
+
+  --ease-cinema: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-cinema: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 html {
   scroll-behavior: smooth;
+  /* Text render tuning, matches the print-of-the-past editorial feel */
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -42,10 +54,11 @@ body {
   color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
 }
 
 .font-display {
@@ -85,17 +98,6 @@ h1, h2, h3, h4 {
   opacity: 0.15;
 }
 
-/* Marquee */
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee-scroll 32s linear infinite;
-}
-@keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
 /* Hide scrollbars for horizontal snap-scroll galleries */
 .scrollbar-hide {
   -ms-overflow-style: none;
@@ -108,13 +110,70 @@ h1, h2, h3, h4 {
 /* Focus visible ring for all interactive elements */
 *:focus-visible {
   outline: 2px solid var(--color-clay);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 /* Smooth image loading */
 img {
   transition: opacity 0.3s ease;
+}
+
+/* ================================================================
+   EDITORIAL / CINEMATIC UTILITIES
+   ================================================================ */
+
+/* Oversized outlined Fraunces for background typographic layers */
+.display-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px currentColor;
+}
+
+/* Film grain — SVG turbulence, animated in 8 tiny steps so it reads
+   as organic noise rather than a spinning blur. */
+.grain-layer {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+  animation: grain-shift 0.9s steps(6) infinite;
+  will-change: background-position;
+}
+@keyframes grain-shift {
+  0%   { background-position: 0 0; }
+  15%  { background-position: -48px 24px; }
+  30%  { background-position: 32px -64px; }
+  45%  { background-position: -72px -32px; }
+  60%  { background-position: 56px 48px; }
+  75%  { background-position: -24px 64px; }
+  90%  { background-position: 64px -16px; }
+  100% { background-position: 0 0; }
+}
+
+/* Slow, continuous Ken-Burns drift for cinematic images */
+@keyframes ken-burns {
+  0%   { transform: scale(1.02) translate3d(0, 0, 0); }
+  50%  { transform: scale(1.09) translate3d(-1.2%, -1.6%, 0); }
+  100% { transform: scale(1.02) translate3d(0, 0, 0); }
+}
+.ken-burns {
+  animation: ken-burns 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Soft paper texture used over ivory sections (data-uri, ~1.5% opacity) */
+.paper-texture {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.4 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+
+/* Vertical editorial rule (hairline) used in story sections */
+.editorial-rule {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.14;
+}
+
+/* Cinematic vignette */
+.vignette {
+  box-shadow: inset 0 0 180px 40px rgba(9, 8, 5, 0.5);
 }
 
 /* Scrollbar styling for webkit */
@@ -134,8 +193,15 @@ img {
 
 /* Respect reduced motion globally */
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .marquee-track { animation: none; }
+  html {
+    scroll-behavior: auto;
+  }
+  .grain-layer {
+    animation: none;
+  }
+  .ken-burns {
+    animation: none;
+  }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
