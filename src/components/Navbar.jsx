@@ -100,7 +100,7 @@ export default function Navbar({ ready = true }) {
           >
             {compact ? (
               <img
-                src="/images/logo.png"
+                src={`${import.meta.env.BASE_URL}images/logo.png`}
                 alt="Wanderly"
                 className="h-10 sm:h-12 w-auto object-contain"
               />

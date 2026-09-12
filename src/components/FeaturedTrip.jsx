@@ -32,7 +32,7 @@ export default function FeaturedTrip() {
         {/* Image — curtain opens like a story spread */}
         <div className="relative">
           <ImageReveal
-            src="/images/01-taj-mahal.jpg"
+            src={`${import.meta.env.BASE_URL}images/01-taj-mahal.jpg`}
             alt="Amalfi Coast, Italy"
             variant="curtain"
             className="rounded-2xl h-96 lg:h-[30rem]"

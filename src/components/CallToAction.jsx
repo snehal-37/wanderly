@@ -29,7 +29,7 @@ export default function CallToAction() {
         {/* slow, continuous drift — the image is alive but never restless */}
         <div className="absolute inset-0">
           <motion.img
-            src="/images/09-pangong-lake.jpg"
+            src={`${import.meta.env.BASE_URL}images/09-pangong-lake.jpg`}
             alt=""
             aria-hidden="true"
             className="w-full h-[115%] object-cover relative"

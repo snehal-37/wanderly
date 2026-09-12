@@ -5,7 +5,7 @@ export const testimonials = [
     location: 'United States',
     trip: 'Amalfi Coast, Italy',
     quote: 'Wanderly made our trip to Italy effortless — every detail considered, nothing left for us to worry about.',
-    avatar: '/images/05-palm-beach-india.jpg',
+    avatar: `${import.meta.env.BASE_URL}images/05-palm-beach-india.jpg`,
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ export const testimonials = [
     location: 'United Kingdom',
     trip: 'Tromsø, Norway',
     quote: 'Watching the Northern Lights from that fjord is something I will be describing badly to friends for years.',
-    avatar: '/images/07-varanasi-ghats-boats.jpg',
+    avatar: `${import.meta.env.BASE_URL}images/07-varanasi-ghats-boats.jpg`,
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ export const testimonials = [
     location: 'India',
     trip: 'Kyoto, Japan',
     quote: 'Beautifully paced, quietly curated — it felt like the itinerary understood us before we did.',
-    avatar: '/images/01-taj-mahal.jpg',
+    avatar: `${import.meta.env.BASE_URL}images/01-taj-mahal.jpg`,
   },
 ];
 

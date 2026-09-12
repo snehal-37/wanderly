@@ -153,7 +153,7 @@ export default function TravelInspiration() {
             transition={{ duration: 1.1, delay: 0.1, ease: EASE_CINEMA }}
           >
             <img
-              src="/images/10-dal-lake-shikara.jpg"
+              src={`${import.meta.env.BASE_URL}images/10-dal-lake-shikara.jpg`}
               alt="A shikara gliding across Dal Lake at dusk"
               loading="lazy"
               decoding="async"
